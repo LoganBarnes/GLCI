@@ -50,6 +50,23 @@ gl::GLInstance::GLInstance()
 
     glfwMakeContextCurrent(window_.get());
     glfwSwapInterval(1);
+
+    if (gl3wInit()) {
+        throw std::runtime_error("failed to initialize OpenGL");
+    }
+
+    if (!gl3wIsSupported(4, 5)) {
+        std::cerr << "OpenGL 4.5 not supported" << std::endl;
+        if (!gl3wIsSupported(4, 1)) {
+            std::cerr << "OpenGL 4.1 not supported" << std::endl;
+            if (!gl3wIsSupported(3, 2)) {
+                std::cerr << "OpenGL 3.2 not supported" << std::endl;
+            }
+        }
+    }
+
+    std::cout << "OpenGL " << glGetString(GL_VERSION) << " GLSL " << glGetString(GL_SHADING_LANGUAGE_VERSION)
+              << std::endl;
 }
 
 gl::GLInstance::~GLInstance() = default;
