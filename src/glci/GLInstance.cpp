@@ -36,6 +36,8 @@ gl::GLInstance::GLInstance()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
     window_ = std::shared_ptr<GLFWwindow>(glfwCreateWindow(640, 480, "OpenGL window", nullptr, nullptr), [](auto p) {
         if (p) {
             glfwDestroyWindow(p);
